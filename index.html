@@ -17,6 +17,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 }
 
 .form-inline input {
+  width: 100%;
   vertical-align: middle;
   margin: 5px 10px 5px 0;
   padding: 10px;
@@ -38,7 +39,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 .ok {
   margin: auto;
-  width: 50%;
+  width: 35%;
   border: 3px solid green;
   padding: 10px;
 }
@@ -56,8 +57,8 @@ body {font-family: Arial, Helvetica, sans-serif;}
 }
 </style>
 </head>
-<body class='ok'>
-
+<body >
+<div class='ok'>
 <h2>Download YouTube Video Subtile</h2>
 <p>Youtube Subtile(.srt) Downloader</p>
 
@@ -65,6 +66,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
   <input type="text" id="ur" placeholder="Enter Youtube Video Link">
   <button type="submit">Submit</button>
 </form>
-
+<div id='gen'></div>
+</div>
 </body>
 </html>
