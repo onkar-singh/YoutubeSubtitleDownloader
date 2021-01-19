@@ -27,6 +27,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 .form-inline button {
   padding: 10px 20px;
+  width: 100%;
   background-color: dodgerblue;
   border: 1px solid #ddd;
   color: white;
@@ -46,7 +47,7 @@ body {font-family: Arial, Helvetica, sans-serif;}
 
 @media (max-width: 800px) {
   .form-inline input {
-    margin: 10px 0;
+    margin: 15px 0;
   }
   .ok{width:100%;}
   
@@ -59,14 +60,76 @@ body {font-family: Arial, Helvetica, sans-serif;}
 </head>
 <body >
 <div class='ok'>
-<h2>Download YouTube Video Subtile</h2>
-<p>Youtube Subtile(.srt) Downloader</p>
+<h2>Download YouTube Video Subtitle</h2>
+<p>Youtube Subtitle(.srt) Downloader</p>
 
-<form class="form-inline">
+<div class="form-inline">
   <input type="text" id="ur" placeholder="Enter Youtube Video Link">
-  <button type="submit">Submit</button>
-</form>
+  <div style='margin:15px 5px'>
+  <span>Select Lang:</span>
+   <select>
+    <option value="en">English</option>
+    <option value="hi">Hindi</option>
+
+  </select></div>
+
+
+  <button id='bt'>Download Subtitle</button>
+</div>
 <div id='gen'></div>
 </div>
+
+<script>
+// https://www.youtube.com/watch?v=m1Ga0bv7C-Q
+// https://video.google.com/timedtext?lang=en&v=
+let jl=document.getElementById("bt")
+jl.onclick = function(){
+let jk=document.getElementById("ur").value;
+let pk1=jk.search("v=");
+if(pk1<=30){
+var jk1=jk.split("v="); var urk='https://video.google.com/timedtext?lang=en&v='+jk1[1];
+console.log(urk,pk1,jk1[1]);
+
+var xhttp = new XMLHttpRequest();
+xhttp.onreadystatechange = function() {
+    if (this.readyState == 4 && this.status == 200) {
+        let om = this.responseXML;
+        let pk = om.getElementsByTagName("text");
+
+        let mo = '';
+        for (i = 0; i < pk.length; i++) {
+            mo += i + 1 + '\r\n' + pk[i].getAttribute('start') + ' --> ' + pk[i].getAttribute('dur') + '\r\n' + pk[i].innerHTML + '\r\n\r\n';
+        }
+        console.log(pk.length, 'mo');
+        mk('hyjmk.srt', mo);
+    }
+}
+
+xhttp.open("GET", urk, true);
+xhttp.send();
+
+function mk(filename, data) {
+    var blob = new Blob([data],{
+        type: 'text/csv'
+    });
+    if (window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveBlob(blob, filename);
+    } else {
+        var elem = window.document.createElement('a');
+        elem.href = window.URL.createObjectURL(blob);
+        elem.download = filename;
+        document.body.appendChild(elem);
+        elem.click();
+        document.body.removeChild(elem);
+    }
+}
+
+
+
+}else{alert('Invalid Link')}
+
+
+};
+</script>
 </body>
 </html>
